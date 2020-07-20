@@ -1,9 +1,5 @@
 {
-  "templates": {
-    "react": {
-      "url": "kekke"
-    }
-  },
+  "templates": {},
   "default": {
     "url": "https://github.com/USTCLX/frontend-config-template.git"
   }

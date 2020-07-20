@@ -28,6 +28,8 @@ module.exports = async function () {
         execSync(`git clone ${url} ${projectName}`, { stdio: 'inherit' });
         // npm i
         execSync(`cd ${projectName} && npm i`, { stdio: 'inherit' });
+        // rm package-lock.json & .git/
+        execSync(`cd ${projectName} && rm package-lock.json && rm -rf ./.git`);
     } catch (err) {
         console.log(chalk.red(err));
         process.exit();
