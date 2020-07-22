@@ -1,6 +1,8 @@
 const { execSync } = require('child_process');
 const inquirer = require('inquirer');
 const chalk = require('chalk');
+const { resolve } = require('path');
+const { unlinkSync, rmdirSync } = require('fs');
 const config = require('../config');
 const DEFAULT = 'default';
 
@@ -26,10 +28,13 @@ module.exports = async function () {
     try {
         // clone
         execSync(`git clone ${url} ${projectName}`, { stdio: 'inherit' });
+
+        // rm package-lock.json & .git/
+        unlinkSync(resolve(process.cwd(), projectName, 'package-lock.json'));
+        rmdirSync(resolve(process.cwd(), projectName, '.git'), { recursive: true });
+
         // npm i
         execSync(`cd ${projectName} && npm i`, { stdio: 'inherit' });
-        // rm package-lock.json & .git/
-        execSync(`cd ${projectName} && rm package-lock.json && rm -rf ./.git`);
     } catch (err) {
         console.log(chalk.red(err));
         process.exit();
